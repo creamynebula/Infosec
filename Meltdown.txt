@@ -1,0 +1,14 @@
+char a[256] = {0,1,...,255} #todos os valores possíveis de um byte
+
+try {
+    char k = *restricted_memory; #throws an exception because you cant access restricted memory... but!
+    char dummy = a[k]; #teoricamente nunca é executado... but!
+}
+catch (Exception) {
+ //blabla
+}
+
+# Veja só, Speculative execution é uma otimização aonde a CPU tenta adivinhar coisas q ela vai precisar fazer e já vai lá e faz e deixa no cache pronto pra qdo precisar. Por causa disso, o valor de k vai ser fetched pro cache. Aí é só a gente iterar sobre o array e ler todos os valores, e medir quanto tempo levou pra ler cada valor.
+Fetch from memory ~ 100ns
+Fetch from cache ~ 1 ns
+O valor que for lido super rápido era o valor em *restricted_memory
